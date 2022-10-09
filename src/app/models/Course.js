@@ -1,15 +1,22 @@
 const mongoose = require('mongoose')
+const slug = require('mongoose-slug-generator')
 const Schema = mongoose.Schema
 
-const Course = new Schema({
-  name: { type: String },
-  description: { type: String, maxLength: 600 },
-  img: { type: String },
-  slug: { type: String, maxLength: 96 },
-  videoId: {type: String },
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
-})
+mongoose.plugin(slug)
+
+const Course = new Schema(
+  {
+    name: { type: String },
+    description: { type: String, maxLength: 600 },
+    img: { type: String },
+    slug: { type: String, slug: 'name', unique: true },
+    videoId: { type: String },
+    level: { type: String },
+  },
+  {
+    timestamps: true,
+  }
+)
 
 // MongoDB will automaticallt translates the Course to courses!
 module.exports = mongoose.model('Course', Course)
