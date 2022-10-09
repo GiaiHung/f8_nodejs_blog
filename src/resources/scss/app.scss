@@ -1,5 +1,24 @@
 @import 'variables';
 
-h2 {
-    color: $red-color;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+.card-course-item {
+    margin-top: 16px;
+}
+
+.footer {
+    background-color: #333;
+    width: screen;
+    color: white;
+    text-align: center;
+    padding: 16px 0;
 }
