@@ -1,0 +1,50 @@
+<div class='mt-4'>
+  <h2 class='fs-4'>Edit course</h2>
+
+  {{!-- form HTML doesn't provide method put so we need to override it with method-override from expressjs middleware --}}
+  <form method='POST' action='/courses/{{course._id}}?_method=PUT'>
+    <div class='mb-3 form-group'>
+      <label for='name' class='form-label'>Name</label>
+      <input
+        type='text'
+        name='name'
+        class='form-control'
+        id='name'
+        placeholder='Enter name'
+        value='{{course.name}}'
+      />
+    </div>
+    <div class='mb-3 form-group'>
+      <label for='description' class='form-label'>Description</label>
+      <textarea
+        name='description'
+        class='form-control'
+        id='description'
+        placeholder='Enter description'
+      >{{course.description}}</textarea>
+    </div>
+    <div class='mb-3 form-group'>
+      <label for='videoId' class='form-label'>Video ID</label>
+      <input
+        type='text'
+        name='videoId'
+        class='form-control'
+        id='videoId'
+        value='{{course.videoId}}'
+        placeholder='Enter video id'
+      />
+    </div>
+    <div class='mb-3 form-group'>
+      <label for='level' class='form-label'>Level</label>
+      <input
+        type='text'
+        name='level'
+        class='form-control'
+        id='level'
+        value='{{course.level}}'
+        placeholder='Enter level'
+      />
+    </div>
+    <button class='btn btn-primary' type='submit'>Save</button>
+  </form>
+</div>
