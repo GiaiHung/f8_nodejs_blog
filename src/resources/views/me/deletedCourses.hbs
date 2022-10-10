@@ -1,0 +1,101 @@
+<body>
+  <div class='mt-4'>
+    <h2>Trash</h2>
+    <a href='/me/stored/courses' class='btn btn-link flex align-items-center'>
+      <span>⬅</span>
+      <span>Back to courses</span>
+    </a>
+
+    <table class='table mt-4'>
+      <thead>
+        <tr>
+          <th scope='col'>#</th>
+          <th scope='col'>Name</th>
+          <th scope='col'>Level</th>
+          <th scope='col' colspan='2'>Deleted at</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each courses}}
+          <tr class='span-delete'>
+            <th scope='row'>{{sum @index 1}}</th>
+            <td>{{this.name}}</td>
+            <td class='text-uppercase'>{{this.level}}</td>
+            <td>{{this.deletedAt}}</td>
+            <td>
+              <a href='' class='btn btn-link restore-btn' data-id="{{this._id}}">Restore</a>
+              <a href='' class='btn btn-danger delete-btn' data-id="{{this._id}}" data-toggle="modal" data-target="#delete-course-modal">Permanent delete</a>
+            </td>
+          </tr>
+        {{else}}
+          <tr>
+            <td colspan='5' class='text-center'>
+              Trash is empty.
+              <a href='/me/stored/courses'>Courses playlist</a>
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+  {{! Course delete modal }}
+  <div id='delete-course-modal' class='modal' tabindex='-1'>
+    <div class='modal-dialog'>
+      <div class='modal-content'>
+        <div class='modal-header'>
+          <h5 class='modal-title'>Permanently delete course</h5>
+          <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+            <span aria-hidden='true'>&times;</span>
+          </button>
+        </div>
+        <div class='modal-body'>
+          <p>Do you really want to permanently delete this course?</p>
+        </div>
+        <div class='modal-footer'>
+          <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
+          <button
+            href='/courses/{{course._id}}'
+            id='btn-delete-course'
+            type='button'
+            class='btn btn-danger'
+          >Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{! Delete hidden form }}
+  <form name='restore-course-form' method='POST'></form>
+  <form name='delete-course-form' method='POST'></form>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var courseId;
+        var restoreForm = document.forms['restore-course-form'];
+        var deleteForm = document.forms['delete-course-form'];
+        var btnDeleteCourse = document.getElementById('btn-delete-course');
+        var restoreBtn = $('.restore-btn')
+
+        // When dialog confirm clicked
+        $('#delete-course-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            courseId = button.data('id');
+        });
+        
+        // Permanently delete
+        btnDeleteCourse.onclick = function () {
+            deleteForm.action = '/courses/' + courseId + '/force?_method=DELETE';
+            deleteForm.submit();
+        }
+
+        restoreBtn.click(function(e) {
+          e.preventDefault()
+          var courseId = $(this).data('id')
+
+          restoreForm.action = '/courses/' + courseId + '/restore?_method=PATCH';
+          restoreForm.submit();
+        })
+    });
+  </script>
+</body>

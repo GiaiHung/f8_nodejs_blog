@@ -1,28 +1,97 @@
-<div class='mt-4'>
-  <h2>My courses</h2>
+<body>
+  <div class='mt-4'>
+    <h2>My courses</h2>
+    <a href='/me/trash/courses' class='btn btn-link flex align-items-center'>
+      {{!-- {{#if deletedCount}} --}}
+        <span>🗑</span>
+        <span>Deleted</span>
+        <span>({{deletedCount}})</span>
+      {{!-- {{/if}} --}}
+    </a>
 
-  <table class='table mt-4'>
-    <thead>
-      <tr>
-        <th scope='col'>#</th>
-        <th scope='col'>Name</th>
-        <th scope='col'>Level</th>
-        <th scope='col' colspan='2'>Created at</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each courses}}
+    <table class='table mt-4'>
+      <thead>
         <tr>
-          <th scope='row'>{{sum @index 1}}</th>
-          <td>{{this.name}}</td>
-          <td class='text-uppercase'>{{this.level}}</td>
-          <td>{{this.createdAt}}</td>
-          <td>
-            <a href='/courses/{{this._id}}/edit' class='btn btn-link'>Edit</a>
-            <a href='/' class='btn btn-link'>Delete</a>
-          </td>
+          <th scope='col'>#</th>
+          <th scope='col'>Name</th>
+          <th scope='col'>Level</th>
+          <th scope='col' colspan='2'>Created at</th>
         </tr>
-      {{/each}}
-    </tbody>
-  </table>
-</div>
+      </thead>
+      <tbody>
+        {{#each courses}}
+          <tr>
+            <th scope='row'>{{sum @index 1}}</th>
+            <td>{{this.name}}</td>
+            <td class='text-uppercase'>{{this.level}}</td>
+            <td>{{this.createdAt}}</td>
+            <td>
+              <a href='/courses/{{this._id}}/edit' class='btn btn-link'>Edit</a>
+              <button
+                class='btn btn-link'
+                data-toggle='modal'
+                data-target='#delete-course-modal'
+                data-id='{{this._id}}'
+              >Delete</button>
+            </td>
+          </tr>
+        {{else}}
+          <tr>
+            <td colspan='5' class='text-center'>
+              You haven't uploaded any course.
+              <a href='/courses/create'>Upload course</a>
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+  {{! Course delete modal }}
+  <div id='delete-course-modal' class='modal' tabindex='-1'>
+    <div class='modal-dialog'>
+      <div class='modal-content'>
+        <div class='modal-header'>
+          <h5 class='modal-title'>Delete course</h5>
+          <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+            <span aria-hidden='true'>&times</span>
+          </button>
+        </div>
+        <div class='modal-body'>
+          <p>Do you really want to delete this course?</p>
+        </div>
+        <div class='modal-footer'>
+          <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
+          <button
+            href='/courses/{{course._id}}'
+            id='btn-delete-course'
+            type='button'
+            class='btn btn-danger'
+          >Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{! Delete hidden form }}
+  <form name='delete-course-form' method='POST'></form>
+
+  <script>
+     document.addEventListener('DOMContentLoaded', function() {
+        var courseId
+        var deleteForm = document.forms['delete-course-form']
+        var btnDeleteCourse = document.getElementById('btn-delete-course')
+        // When dialog confirm clicked
+        $('#delete-course-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            courseId = button.data('id')
+        })
+        
+        // When delete course btn clicked
+        btnDeleteCourse.onclick = function () {
+            deleteForm.action = '/courses/' + courseId + '?_method=DELETE'
+            deleteForm.submit()
+        }
+    })
+  </script>
+</body>

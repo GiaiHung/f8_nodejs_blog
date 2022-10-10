@@ -11,4 +11,9 @@ courseRouter.post('/store', CourseController.store)
 
 courseRouter.put('/:id', CourseController.update)
 
+courseRouter.delete('/:id', CourseController.delete)
+courseRouter.delete('/:id/force', CourseController.forceDelete)
+
+courseRouter.patch('/:id/restore', CourseController.patch)
+
 module.exports = courseRouter

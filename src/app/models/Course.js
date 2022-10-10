@@ -1,8 +1,7 @@
 const mongoose = require('mongoose')
 const slug = require('mongoose-slug-generator')
+const mongooseDelete = require('mongoose-delete')
 const Schema = mongoose.Schema
-
-mongoose.plugin(slug)
 
 const Course = new Schema(
   {
@@ -18,5 +17,9 @@ const Course = new Schema(
   }
 )
 
-// MongoDB will automaticallt translates the Course to courses!
+// PLUGINS
+Course.plugin(mongooseDelete, { deletedAt: true, overrideMethods: 'all' })
+mongoose.plugin(slug)
+
+// MongoDB will automatically translates the Course to courses!
 module.exports = mongoose.model('Course', Course)

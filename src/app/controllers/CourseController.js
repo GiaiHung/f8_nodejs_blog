@@ -18,7 +18,7 @@ class CourseController {
     res.render('courses/create')
   }
 
-  // GET /courses/edit 
+  // GET /courses/edit
   edit(req, res, next) {
     Course.findById(req.params.id).then((course) =>
       res.render('courses/edit', {
@@ -42,6 +42,27 @@ class CourseController {
   update(req, res, next) {
     Course.findByIdAndUpdate(req.params.id, req.body)
       .then(() => res.redirect('/me/stored/courses'))
+      .catch(next)
+  }
+
+  // DELETE /courses/:id
+  delete(req, res, next) {
+    Course.delete({ _id: req.params.id })
+      .then(() => res.redirect('back'))
+      .catch(next)
+  }
+
+  // DELETE /courses/:id/force
+  forceDelete(req, res, next) {
+    Course.deleteOne({ _id: req.params.id })
+      .then(() => res.redirect('back'))
+      .catch(next)
+  }
+
+  // PATCH /courses/restore
+  patch(req, res, next) {
+    Course.restore({ _id: req.params.id })
+      .then(() => res.redirect('back'))
       .catch(next)
   }
 }
