@@ -7,6 +7,7 @@ courseRouter.get('/create', CourseController.create)
 courseRouter.get('/:id/edit', CourseController.edit)
 courseRouter.get('/:slug', CourseController.show)
 
+courseRouter.post('/handle-form-actions', CourseController.actions)
 courseRouter.post('/store', CourseController.store)
 
 courseRouter.put('/:id', CourseController.update)

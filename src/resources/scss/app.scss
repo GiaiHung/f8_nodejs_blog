@@ -1,31 +1,42 @@
 @import 'variables';
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    overflow-x: hidden;
-    min-height: 100vh;
+  overflow-x: hidden;
+  min-height: 100vh;
 }
 
 .card-course-item {
-    margin-top: 16px;
+  margin-top: 16px;
 }
 
 .user-avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    object-fit: cover;    
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.select-options {
+  width: 200px;
+  margin: 0 20px;
+}
+
+.disabled-state-btn {
+  user-select: none !important;
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
 }
 
 .footer {
-    background-color: #333;
-    width: screen;
-    color: white;
-    text-align: center;
-    padding: 16px 0;
+  background-color: #333;
+  width: screen;
+  color: white;
+  text-align: center;
+  padding: 16px 0;
 }

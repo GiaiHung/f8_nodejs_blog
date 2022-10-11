@@ -38,6 +38,32 @@ class CourseController {
       .catch(next)
   }
 
+  // POTS /courses/handle-form-actions
+  actions(req, res, next) {
+    switch (req.body.action) {
+      case 'delete':
+        Course.delete({ _id: { $in: req.body.courseIds } })
+          .then(() => res.redirect('back'))
+          .catch(next)
+        break
+
+      case 'restore':
+        Course.restore({ _id: { $in: req.body.courseIds } })
+          .then(() => res.redirect('back'))
+          .catch(next)
+        break
+
+      case 'permanent-delete':
+        Course.deleteMany({ _id: { $in: req.body.courseIds } })
+          .then(() => res.redirect('back'))
+          .catch(next)
+        break
+
+      default:
+        res.json({ error: 'Invalid action' })
+    }
+  }
+
   // PUT /courses/:id
   update(req, res, next) {
     Course.findByIdAndUpdate(req.params.id, req.body)
