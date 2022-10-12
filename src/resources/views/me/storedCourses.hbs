@@ -29,7 +29,10 @@
       <thead>
         <tr>
           <th scope='col'></th>
-          <th scope='col'>#</th>
+          <th scope='col'>
+            ID
+            {{{sortable '_id' _sort}}}
+          </th>
           <th scope='col'>
             Name
             {{!-- For security and escaped character in handlebars --}}
@@ -37,11 +40,9 @@
           </th>
           <th scope='col'>
             Level
-            {{{sortable 'level' _sort}}}
           </th>
           <th scope='col' colspan='2'>
             Created at
-            {{{sortable 'createdAt' _sort}}}
           </th>
         </tr>
       </thead>
@@ -53,7 +54,9 @@
                 <input class="form-check-input input-checkbox" type="checkbox" name='courseIds[]' value="{{this._id}}">
               </div>
             </td>
-            <th scope='row'>{{sum @index 1}}</th>
+            <th scope='row'>
+              {{this._id}}
+            </th>
             <td>{{this.name}}</td>
             <td class='text-uppercase'>{{this.level}}</td>
             <td>{{this.createdAt}}</td>
