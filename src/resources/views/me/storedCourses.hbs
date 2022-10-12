@@ -30,9 +30,19 @@
         <tr>
           <th scope='col'></th>
           <th scope='col'>#</th>
-          <th scope='col'>Name</th>
-          <th scope='col'>Level</th>
-          <th scope='col' colspan='2'>Created at</th>
+          <th scope='col'>
+            Name
+            {{!-- For security and escaped character in handlebars --}}
+            {{{sortable 'name' _sort}}}
+          </th>
+          <th scope='col'>
+            Level
+            {{{sortable 'level' _sort}}}
+          </th>
+          <th scope='col' colspan='2'>
+            Created at
+            {{{sortable 'createdAt' _sort}}}
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -146,7 +156,6 @@
           } else {
             selectAllSubmitBtn.attr('disabled', true)
           }
-          console.log('123')
         }
     });
   </script>

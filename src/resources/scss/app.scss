@@ -11,6 +11,11 @@ body {
   min-height: 100vh;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .card-course-item {
   margin-top: 16px;
 }
